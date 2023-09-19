@@ -5,7 +5,7 @@ Mémoire pour le [Master TNAH de l'École Nationale des Chartes](https://www.cha
 
 Par Justine Chainiau 
 
-Sep. 2023 
+Sept. 2023 
 
 ### Résumé
 
