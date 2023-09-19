@@ -1,5 +1,5 @@
 # VERS LA MISE EN LIGNE DES ACTES DES DUCS DE BOURBON (1356 - 1475)
-## Édition, encodage et chaîne de traitement au sein du projet « Actes Princiers~»
+## Édition, encodage et chaîne de traitement au sein du projet « Actes Princiers&nbsp»
 
 Mémoire pour le Master TNAH de l'École Nationale des Chartes
 
