@@ -1,7 +1,7 @@
 # VERS LA MISE EN LIGNE DES ACTES DES DUCS DE BOURBON (1356 - 1475)
 ## Édition, encodage et chaîne de traitement au sein du projet « Actes Princiers»
 
-Mémoire pour le <Master TNAH de l'École Nationale des Chartes (https://www.chartes.psl.eu/fr/cursus/master-technologies-numeriques-appliquees-histoire)>
+Mémoire pour le [Master TNAH de l'École Nationale des Chartes (https://www.chartes.psl.eu/fr/cursus/master-technologies-numeriques-appliquees-histoire)]
 
 Par Justine Chainiau 
 
