@@ -35,7 +35,7 @@ III. La chaîne de traitement des actes princiers
 
 Chapitre 5. Structuration des XML à partir d’un script Python - Chapitre 6. Préparation à la mise en ligne des données
 
-### Citation 
+### Informations bibliographiques
 
 Justine Chainiau, Vers la mise en ligne des actes des ducs de Bourbon (1356 - 1475). Édition, encodage et chaîne de traitement au
 sein du projet « Actes Princiers au royaume de France (XIVe - XVIe siècle) », mémoire du Master « Technologies numériques appliquées à l’histoire », dir. JD. Généro
