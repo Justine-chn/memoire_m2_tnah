@@ -1,0 +1,197 @@
+
+% PREAMBULE
+
+%package obligatoire : type de document
+\documentclass[a4paper,12pt,twoside]{book}
+
+% encodage (pour XeLaTeX)
+\usepackage{fontspec}
+
+
+%si index, package pour index + makeindex avant hyperref
+
+
+% le package hyperref avec des options, si en local
+%\usepackage[pdfusetitle, pdfsubject ={Mémoire TNAH}, pdfkeywords={les mots-clés}]{hyperref}
+
+%avec overleaf, utiliser :
+\usepackage[xetex]{hyperref}
+\hypersetup{
+pdfauthor = {Justine Chainiau},
+pdftitle = {VERS LA MISE EN LIGNE DES ACTES DES DUCS DE BOURBON (1356 - 1475)},
+pdfsubject = {Actes princiers},
+pdfkeywords = {actes princiers} {Bourbons} {édition numérique}
+}
+
+%il faut mettre au moins une langue
+\usepackage[english,french]{babel}
+
+% configurer le document selon les normes de l'école
+\usepackage[margin=2.5cm]{geometry} %marges
+\usepackage{setspace} % espacement qui permet ensuite de définir un interligne
+\onehalfspacing % interligne de 1.5
+\setlength\parindent{1cm} % indentation des paragraphes à 1 cm
+
+\usepackage{caption}
+
+\usepackage{longtable}
+
+\usepackage{lettrine} % lettrines (pas obligatoire)
+
+\usepackage{graphicx}
+\usepackage{float}
+
+\usepackage{tocbibind}
+
+% bibliographie
+\usepackage{csquotes}
+\usepackage[backend=biber, sorting=nyt, style=enc,maxbibnames=10]{biblatex}
+\addbibresource{bibliographie_memoire.bib}
+\nocite{*}
+
+%\usepackage{glossaries}
+%\makeglossaries
+
+
+% + toutes la liste des packages nécessaires à votre document (si images, tableaux, schémas, etc.)
+
+% on pourra aussi utiliser la commande mise dans l'exemple de correction du TP1 pour enlever les titres courant qui traînent sur les pages
+
+
+\author{Justine Chainiau - M2 TNAH}
+\title{VERS LA MISE EN LIGNE DES ACTES DES DUCS DE BOURBON (1356 - 1475)}
+
+% DOCUMENT
+\begin{document}
+
+ \include{front/title_page}
+	
+	\thispagestyle{empty}	
+	\cleardoublepage
+	
+	\frontmatter
+	\chapter{Résumé}
+	\medskip
+	Le projet \og Actes Princiers au royaume de France (\textsc{XIV}\up{e} - \textsc{XVI}\up{e} siècle) \fg \space entend procéder à l’édition numérique de plusieurs corpus d’actes inédits de princes français de la fin du Moyen Âge. Parmi ces corpus se trouvent ceux composés des actes émis par les ducs de Bourbon : Louis II, Anne Dauphine, Charles I\up{er} et Agnès de Bourgogne. 
+ \newline 
+    \par Ces quatre corpus ont fait l'objet d'éditions numériques via un logiciel de traitement de texte. Le présent mémoire s'attache à présenter la chaîne de traitement permettant la transformation des documents Word contenant les éditions diplomatiques des actes en des fichiers XML (TEI) en vue de leur mise en ligne. 
+	\bigskip
+    \bigskip
+    \bigskip
+    
+	\textbf{Mots-clés~:} Actes princiers ; ducs de Bourbon ; chaîne de traitement ; diplomatique ; édition ; encodage ; expressions régulières ; LaTeX ; ODT ; Python ; transcription ; XML-TEI.
+ \newline 
+	
+	\textbf{Informations bibliographiques~:} Justine Chainiau, \textit{Vers la mise en ligne des acetes des ducs de Bourbon (1356 - 1475). Édition, encodage et chaîne de traitement au sein du projet \og Actes Princiers au royaume de France (\textsc{XIV}\up{e} - \textsc{XVI}\up{e} siècle) \fg}, mémoire de master \og{}Technologies numériques appliquées à l'histoire\fg{}, dir. Jean-Damien Généro et Lucence Ing, École nationale des chartes, 2023.
+\newline 
+
+    \textbf{Soutenance :} mémoire présenté et soutenu publiquement le 25 septembre 2023 à l’École nationale des chartes, devant un jury composé d’Olivier Canteaut, président, archiviste paléographe et maître de conférences, Jean-Damien Généro, ingénieur d'études du CNRS et Lucence Ing, doctorante et attachée temporaire d'enseignement et de recherche (ATER).  
+    \newline 
+
+    \textbf{Illustration de couverture :} Lettres patentes d'Anne Dauphine, AN, P 1389\up{3}, c.~314 (9 février 1410). 
+	
+		\newpage{\pagestyle{empty}\cleardoublepage}
+	
+	\chapter{Remerciements}
+	
+	\lettrine{M}es remerciements vont tout d'abord à mon encadrant de stage Jean-Damien Généro pour son accompagnement. Son écoute, sa disponibilité et ses conseils ont été essentiels et précieux dans la conduite des missions du stage et pour la rédaction du mémoire. 
+    \newline 
+    \par Je tiens aussi à remercier particulièrement Lucence Ing, pour ses relectures et ses recommandations concernant la rédaction du présent travail de recherche, et Olivier Canteaut, pour l'intérêt porté à mon travail et les informations transmises quant à ma poursuite d'étude.
+    \newline 
+    \par Je remercie également l'équipe pédagogique du master TNAH pour ces deux années de formation riches d'enseignements, d'acquisition de compétences et de méthodes. 
+    \newline 
+    \par Enfin, je remercie mes proches de m'avoir épaulée et soutenue pendant la rédaction. 
+
+    \newpage{\pagestyle{empty}\cleardoublepage}
+	
+	\chapter{Liste des sigles et abréviations}
+
+    \section*{Institutions}
+
+    \noindent AD : Archives départementales
+    \newline 
+    AM : Archives municipales
+    \newline 
+    AN : Archives nationales
+    \newline 
+    BM : Bibliothèque municipale
+    \newline 
+    BnF : Bibliothèque nationale de France
+    \newline 
+    CNRS : Centre National de Recherche Scientifique
+    \newline 
+    CRH : Centre de recherches historiques (CNRS - EHESS)
+    \newline 
+    EHESS : École des Hautes Études en Sciences Sociales
+    \newline 
+    ENC : École Nationale des Chartes
+    \newline 
+    Labex : Laboratoire d'excellence
+    \newline
+    LAMOP : Laboratoire de médiévistique occidentale de Paris (CNRS - Paris 1)
+    \newline
+    UMR : Unité mixte de recherche
+
+    \section*{Informatique et technologies numériques}
+
+    \noindent CSV : \textit{Comma-Separated Values}
+    \newline 
+    HTML : \textit{Hypertext Markup Language}
+    \newline 
+    ODF : \textit{Open Document Format}
+    \newline
+    ODT : \textit{Open Document Text}
+    \newline 
+    PDF : \textit{Portable Document Format}
+    \newline 
+    TEI : \textit{Text Encoding Initiative}
+    \newline 
+    XML : \textit{eXtensible Markup Language}
+    \newline 
+    XSL : \textit{eXtensible Stylesheet Language}
+
+    \newpage{\pagestyle{empty}\cleardoublepage}
+
+    \chapter*{Bibliographie}\printbibliography[title=Diplomatique,heading=subbibliography,keyword=dip]\printbibliography[title=Historiographie,heading=subbibliography,keyword=histo]
+    \printbibliography[title=Les ducs de Bourbon,heading=subbibliography,keyword=bourbon] 
+    \printbibliography[title=Technologies numériques,heading=subbibliography,keyword=num]
+    
+    \addcontentsline{toc}{chapter}{Bibliographie}
+ 
+	\include{front/introduction}
+	
+	\thispagestyle{empty}
+	\cleardoublepage
+	
+	\mainmatter
+	
+	% là, le corps du mémoire, généralement TROIS parties
+	
+	% possibilité d'avoir un document main.tex peu rempli, et chaque partie appelée par \input{} par exemple
+    \include{front/partie_i}
+	
+	\include{front/partie_ii}
+    
+    \include{front/partie_iii}
+    
+    \backmatter\include{front/conclusion}
+
+    \appendix\include{front/annexes}
+	
+	
+
+% index à mettre ici si index	
+%	\printindex
+
+% glossaire si glossaire
+%	\printglossaries
+
+% si figures
+%	\listoffigures
+
+% si tables
+%	\listoftables
+
+	\tableofcontents
+	
+\end{document}
